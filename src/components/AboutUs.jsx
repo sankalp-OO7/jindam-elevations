@@ -1,6 +1,37 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useInView, AnimatePresence, color } from "framer-motion";
+
+// Consistent color palette - using specific hex values for device consistency
+const colors = {
+  primary: {
+    orange: '#f97316', // Orange-600
+    red: '#dc2626',    // Red-600
+    blue: '#2563eb',   // Blue-600
+    indigo: '#4f46e5', // Indigo-600
+    purple: '#9333ea', // Purple-600
+    green: '#16a34a',  // Green-600
+    cyan: '#0891b2',   // Cyan-600
+    emerald: '#059669' // Emerald-600
+  },
+  light: {
+    orange: '#fed7aa', // Orange-200
+    red: '#fecaca',    // Red-200
+    blue: '#bfdbfe',   // Blue-200
+    indigo: '#c7d2fe', // Indigo-200
+    purple: '#ddd6fe', // Purple-200
+    green: '#bbf7d0',  // Green-200
+    gray: '#e5e7eb'    // Gray-200
+  },
+  dark: {
+    gray800: '#1f2937',
+    gray700: '#374151',
+    gray600: '#4b5563'
+  },
+  background: {
+    gradient: 'linear-gradient( 45deg , #fef7ed 0%, #fed7aa 25%, #fdba74 50%, #fb923c 75%, #f97316 100%)'
+  }
+};
 
 // Animated text component for letter-by-letter animation
 const AnimatedText = ({ text, className, delay = 0 }) => {
@@ -49,7 +80,7 @@ const AnimatedText = ({ text, className, delay = 0 }) => {
           className="inline-block"
           whileHover={{
             scale: 1.05,
-            color: "#2563eb",
+            color: colors.primary.blue,
             transition: { duration: 0.3 }
           }}
         >
@@ -138,7 +169,11 @@ const FloatingParticles = () => {
       {particles.map((particle) => (
         <motion.div
           key={particle}
-          className="absolute w-1 h-1 sm:w-2 sm:h-2 bg-gradient-to-r from-orange-400 to-red-500 rounded-full opacity-20"
+          className="absolute w-1 h-1 sm:w-2 sm:h-2 rounded-full"
+          style={{
+            background: `linear-gradient(45deg, ${colors.primary.orange}, ${colors.primary.red})`,
+            opacity: 0.2
+          }}
           initial={{
             x: Math.random() * dimensions.width,
             y: Math.random() * dimensions.height,
@@ -170,7 +205,11 @@ const OwnerPortrait = () => (
   >
     {/* Avatar placeholder with professional styling */}
     <motion.div
-      className="w-full h-full bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 rounded-full flex items-center justify-center shadow-2xl border-4 border-white"
+      className="w-full h-full rounded-full flex items-center justify-center shadow-2xl border-4"
+      style={{
+        background: `linear-gradient(135deg, ${colors.primary.blue} 0%, ${colors.primary.indigo} 50%, ${colors.primary.purple} 100%)`,
+        borderColor: '#ffffff'
+      }}
       whileHover={{ scale: 1.05 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
@@ -186,7 +225,8 @@ const OwnerPortrait = () => (
     
     {/* Glowing ring effect */}
     <motion.div
-      className="absolute inset-0 rounded-full border-2 border-blue-400/30"
+      className="absolute inset-0 rounded-full border-2"
+      style={{ borderColor: `${colors.primary.blue}30` }}
       animate={{
         scale: [1, 1.1, 1],
         opacity: [0.3, 0.6, 0.3],
@@ -214,7 +254,12 @@ const ExperienceStats = () => {
       {stats.map((stat, index) => (
         <motion.div
           key={stat.label}
-          className="text-center p-4 bg-white/60 backdrop-blur-sm rounded-xl border border-gray-200/60 shadow-lg"
+          className="text-center p-4 rounded-xl border shadow-lg"
+          style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.6)',
+            backdropFilter: 'blur(10px)',
+            borderColor: 'rgba(229, 231, 235, 0.6)'
+          }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.2 + index * 0.2 }}
@@ -231,7 +276,8 @@ const ExperienceStats = () => {
             {stat.icon}
           </motion.div>
           <motion.div
-            className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-700 mb-1"
+            className="text-xl sm:text-2xl lg:text-3xl font-bold mb-1"
+            style={{ color: colors.primary.blue }}
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ 
@@ -243,7 +289,7 @@ const ExperienceStats = () => {
           >
             {stat.number}
           </motion.div>
-          <div className="text-xs sm:text-sm text-gray-600 font-medium">
+          <div className="text-xs sm:text-sm font-medium" style={{ color: colors.dark.gray600 }}>
             {stat.label}
           </div>
         </motion.div>
@@ -255,10 +301,10 @@ const ExperienceStats = () => {
 // Expertise Areas Component
 const ExpertiseAreas = () => {
   const expertise = [
-    { title: "ACP Solutions", desc: "Premium Aluminium Composite Paneling", color: "from-blue-500 to-cyan-500" },
-    { title: "Glass Glazing", desc: "Modern glazing systems & facades", color: "from-green-500 to-emerald-500" },
-    { title: "Exterior Design", desc: "Complete facade transformation", color: "from-purple-500 to-pink-500" },
-    { title: "Custom Solutions", desc: "Tailored architectural finishes", color: "from-orange-500 to-red-500" }
+    { title: "ACP Solutions", desc: "Premium Aluminium Composite Paneling", colors: { from: colors.primary.blue, to: colors.primary.cyan } },
+    { title: "Glass Glazing", desc: "Modern glazing systems & facades", colors: { from: colors.primary.green, to: colors.primary.emerald } },
+    { title: "Exterior Design", desc: "Complete facade transformation", colors: { from: colors.primary.purple, to: '#ec4899' } },
+    { title: "Custom Solutions", desc: "Tailored architectural finishes", colors: { from: colors.primary.orange, to: colors.primary.red } }
   ];
 
   return (
@@ -266,7 +312,12 @@ const ExpertiseAreas = () => {
       {expertise.map((item, index) => (
         <motion.div
           key={item.title}
-          className="relative p-6 bg-white/70 backdrop-blur-sm rounded-xl border border-gray-200/60 shadow-lg overflow-hidden group"
+          className="relative p-6 rounded-xl border shadow-lg overflow-hidden group"
+          style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.7)',
+            backdropFilter: 'blur(10px)',
+            borderColor: 'rgba(229, 231, 235, 0.6)'
+          }}
           initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 2 + index * 0.2 }}
@@ -276,17 +327,23 @@ const ExpertiseAreas = () => {
           }}
         >
           <motion.div
-            className={`absolute inset-0 bg-gradient-to-r ${item.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
+            className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300"
+            style={{
+              background: `linear-gradient(45deg, ${item.colors.from}, ${item.colors.to})`
+            }}
           />
           <motion.div
-            className={`inline-flex items-center px-3 py-1 bg-gradient-to-r ${item.color} text-white text-xs font-semibold rounded-full mb-3`}
+            className="inline-flex items-center px-3 py-1 text-white text-xs font-semibold rounded-full mb-3"
+            style={{
+              background: `linear-gradient(45deg, ${item.colors.from}, ${item.colors.to})`
+            }}
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 200, delay: 2.2 + index * 0.2 }}
           >
             {item.title}
           </motion.div>
-          <p className="text-sm sm:text-base text-gray-700 font-medium">
+          <p className="text-sm sm:text-base font-medium" style={{ color: colors.dark.gray700 }}>
             {item.desc}
           </p>
         </motion.div>
@@ -326,27 +383,24 @@ export default function AboutSection() {
     }
   };
 
+  const backgroundStyle = {
+    background: isMobile ? 
+      colors.background.gradient :
+      `radial-gradient(circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, 
+      rgba(251, 146, 60, 0.08) 0%, 
+      rgba(249, 115, 22, 0.05) 25%, 
+      rgba(234, 88, 12, 0.03) 50%, 
+      transparent 70%),
+      ${colors.background.gradient}`,
+  };
+
   return (
     <motion.section
       ref={containerRef}
       id="about"
       className="relative py-16 sm:py-20 lg:py-24 px-4 sm:px-6 overflow-hidden"
       onMouseMove={handleMouseMove}
-      style={{
-        background: isMobile ? 
-          `linear-gradient(135deg, #fef7ed 0%, #fed7aa 25%, #fdba74 50%, #fb923c 75%, #f97316 100%)` :
-          `radial-gradient(circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, 
-          rgba(251, 146, 60, 0.08) 0%, 
-          rgba(249, 115, 22, 0.05) 25%, 
-          rgba(234, 88, 12, 0.03) 50%, 
-          transparent 70%),
-          linear-gradient(135deg, 
-          #fef7ed 0%, 
-          #fed7aa 25%, 
-          #fdba74 50%, 
-          #fb923c 75%, 
-          #f97316 100%)`,
-      }}
+      style={backgroundStyle}
     >
       {/* Animated Background Elements */}
       <FloatingParticles />
@@ -355,7 +409,8 @@ export default function AboutSection() {
       {!isMobile && (
         <>
           <motion.div
-            className="absolute top-20 right-20 w-24 h-24 border-2 border-orange-200/40 rounded-lg rotate-45"
+            className="absolute top-20 right-20 w-24 h-24 border-2 rounded-lg rotate-45"
+            style={{ borderColor: `${colors.light.orange}66`,y: y1 }}
             animate={{
               rotate: [45, 135, 45],
               scale: [1, 1.1, 1],
@@ -364,11 +419,14 @@ export default function AboutSection() {
               rotate: { duration: 20, repeat: Infinity, ease: "linear" },
               scale: { duration: 6, repeat: Infinity, ease: "easeInOut" },
             }}
-            style={{ y: y1 }}
-          />
+           />
           
           <motion.div
-            className="absolute bottom-32 left-32 w-16 h-16 bg-gradient-to-r from-red-100/60 to-orange-100/60 rounded-full backdrop-blur-sm"
+            className="absolute bottom-32 left-32 w-16 h-16 rounded-full"
+            style={{
+              background: `linear-gradient(45deg, ${colors.primary.red}10, ${colors.primary.orange}10)`,
+              backdropFilter: 'blur(10px)',y: y2
+            }}
             animate={{
               x: [-10, 10, -10],
               y: [-5, 5, -5],
@@ -378,8 +436,7 @@ export default function AboutSection() {
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            style={{ y: y2 }}
-          />
+           />
         </>
       )}
 
@@ -394,23 +451,39 @@ export default function AboutSection() {
           transition={{ duration: 0.8 }}
         >
           <motion.div
-            className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200/60 rounded-full text-sm font-medium text-orange-700 mb-6"
+            className="inline-flex items-center px-4 py-2 border rounded-full text-sm font-medium mb-6"
+            style={{
+              background: `linear-gradient(45deg, #fff7ed, #fef2f2)`,
+              borderColor: `${colors.light.orange}99`,
+              color: colors.primary.orange
+            }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <span className="w-2 h-2 bg-orange-500 rounded-full mr-2 animate-pulse"></span>
+            <span className="w-2 h-2 rounded-full mr-2 animate-pulse" style={{ backgroundColor: colors.primary.orange }}></span>
             About Jindam Elevations
           </motion.div>
 
           <AnimatedText
             text="Meet Our Founder"
-            className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-800 via-orange-700 to-red-800 mb-4 leading-tight"
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black  mb-4 leading-tight"
+            style={{
+              background: `linear-gradient(45deg, ${colors.dark.gray800}, ${colors.primary.orange}, ${colors.primary.red})`,
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+               
+            }}
             delay={0.5}
           />
           
           <motion.div
-            className="h-1 w-32 bg-gradient-to-r from-orange-500 to-red-500 rounded-full mx-auto"
+            className="h-1 rounded-full mx-auto"
+            style={{
+              background: `linear-gradient(45deg, ${colors.primary.orange}, ${colors.primary.red})`,
+              width: '8rem'
+            }}
             initial={{ width: 0 }}
             animate={isInView ? { width: "8rem" } : {}}
             transition={{ duration: 1, delay: 1.2 }}
@@ -439,12 +512,19 @@ export default function AboutSection() {
                 >
                   <AnimatedText
                     text="Vinay Vyankatesh Jindam"
-                    className="text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-800 mb-2"
+                    className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2"
+                    style={{
+                      background: `linear-gradient(45deg, ${colors.primary.blue}, ${colors.primary.indigo})`,
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text'
+                    }}
                     delay={1.8}
                   />
                   
                   <motion.p
-                    className="text-lg sm:text-xl text-orange-600 font-semibold mb-4"
+                    className="text-lg sm:text-xl font-semibold mb-4"
+                    style={{ color: colors.primary.orange }}
                     initial={{ opacity: 0 }}
                     animate={isInView ? { opacity: 1 } : {}}
                     transition={{ duration: 0.6, delay: 2.5 }}
@@ -453,12 +533,17 @@ export default function AboutSection() {
                   </motion.p>
                   
                   <motion.div
-                    className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 border border-green-200 rounded-full text-sm font-medium text-green-700"
+                    className="inline-flex items-center px-4 py-2 border rounded-full text-sm font-medium"
+                    style={{
+                      background: `linear-gradient(45deg, #f0fdf4, #ecfdf5)`,
+                      borderColor: colors.light.green,
+                      color: colors.primary.green
+                    }}
                     initial={{ opacity: 0, scale: 0 }}
                     animate={isInView ? { opacity: 1, scale: 1 } : {}}
                     transition={{ type: "spring", stiffness: 200, delay: 2.8 }}
                   >
-                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+                    <span className="w-2 h-2 rounded-full mr-2 animate-pulse" style={{ backgroundColor: colors.primary.green }}></span>
                     Leading Since 2013
                   </motion.div>
                 </motion.div>
@@ -478,14 +563,20 @@ export default function AboutSection() {
           >
             <Card3D>
               <motion.div
-                className="p-6 sm:p-8 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/60 shadow-xl"
+                className="p-6 sm:p-8 rounded-2xl border shadow-xl"
+                style={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                  backdropFilter: 'blur(10px)',
+                  borderColor: 'rgba(229, 231, 235, 0.6)'
+                }}
                 whileHover={!isMobile ? {
                   boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)",
-                  borderColor: "rgba(249, 115, 22, 0.3)",
+                  borderColor: `${colors.primary.orange}4D`,
                 } : {}}
               >
                 <motion.h3
-                  className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-6"
+                  className="text-xl sm:text-2xl lg:text-3xl font-bold mb-6"
+                  style={{ color: colors.dark.gray800 }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.8 }}
@@ -494,13 +585,14 @@ export default function AboutSection() {
                 </motion.h3>
                 
                 <motion.div
-                  className="space-y-4 text-gray-700 leading-relaxed"
+                  className="space-y-4 leading-relaxed"
+                  style={{ color: colors.dark.gray700 }}
                   initial={{ opacity: 0 }}
                   animate={isInView ? { opacity: 1 } : {}}
                   transition={{ duration: 0.8, delay: 1 }}
                 >
                   <p className="text-sm sm:text-base lg:text-lg">
-                    <strong className="text-orange-600">Jindam Elevations</strong> is a trusted name in exterior design solutions, specializing in <strong className="text-blue-600">Aluminium Composite Paneling (ACP)</strong>, <strong className="text-indigo-600">Exterior Composite Paneling</strong>, and <strong className="text-purple-600">Glass Glazing</strong>. With over a decade of hands-on experience, we help bring architectural visions to life by enhancing the exteriors of commercial and residential buildings with precision, durability, and style.
+                    <strong style={{ color: colors.primary.orange }}>Jindam Elevations</strong> is a trusted name in exterior design solutions, specializing in <strong style={{ color: colors.primary.blue }}>Aluminium Composite Paneling (ACP)</strong>, <strong style={{ color: colors.primary.indigo }}>Exterior Composite Paneling</strong>, and <strong style={{ color: colors.primary.purple }}>Glass Glazing</strong>. With over a decade of hands-on experience, we help bring architectural visions to life by enhancing the exteriors of commercial and residential buildings with precision, durability, and style.
                   </p>
                   
                   <p className="text-sm sm:text-base lg:text-lg">
@@ -508,12 +600,16 @@ export default function AboutSection() {
                   </p>
                   
                   <motion.div
-                    className="relative p-4 bg-gradient-to-r from-orange-50 to-red-50 border-l-4 border-orange-500 rounded-r-lg mt-6"
+                    className="relative p-4 border-l-4 rounded-r-lg mt-6"
+                    style={{
+                      background: `linear-gradient(45deg, #fff7ed, #fef2f2)`,
+                      borderLeftColor: colors.primary.orange
+                    }}
                     initial={{ opacity: 0, x: -20 }}
                     animate={isInView ? { opacity: 1, x: 0 } : {}}
                     transition={{ duration: 0.6, delay: 1.5 }}
                   >
-                    <p className="text-sm sm:text-base lg:text-lg font-semibold text-gray-800 italic">
+                    <p className="text-sm sm:text-base lg:text-lg font-semibold italic" style={{ color: colors.dark.gray800 }}>
                       "At Jindam Elevations, we don't just build exteriors, we craft impressions"
                     </p>
                   </motion.div>
@@ -534,7 +630,8 @@ export default function AboutSection() {
           transition={{ duration: 0.8, delay: 3 }}
         >
           <motion.p
-            className="text-lg sm:text-xl text-gray-700 mb-8 max-w-3xl mx-auto"
+            className="text-lg sm:text-xl mb-8 max-w-3xl mx-auto"
+            style={{ color: colors.dark.gray700 }}
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 3.3 }}
@@ -549,15 +646,21 @@ export default function AboutSection() {
             transition={{ duration: 0.6, delay: 3.6 }}
           >
             <motion.button
-              className="relative px-8 py-4 bg-gradient-to-r from-orange-600 to-red-600 text-white font-semibold rounded-xl overflow-hidden group shadow-lg"
+              className="relative px-8 py-4 text-white font-semibold rounded-xl overflow-hidden group shadow-lg"
+              style={{
+                background: `linear-gradient(45deg, ${colors.primary.orange}, ${colors.primary.red})`
+              }}
               whileHover={!isMobile ? { 
                 scale: 1.05,
-                boxShadow: "0 20px 40px -12px rgba(249, 115, 22, 0.4)"
+                boxShadow: `0 20px 40px -12px ${colors.primary.orange}66`
               } : {}}
               whileTap={{ scale: 0.95 }}
             >
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-red-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{
+                  background: `linear-gradient(45deg, ${colors.primary.red}, #ec4899)`
+                }}
               />
               <span className="relative z-10 flex items-center justify-center">
                 <span>Get Started Today</span>
@@ -572,16 +675,20 @@ export default function AboutSection() {
             </motion.button>
 
             <motion.button
-              className="px-8 py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition-all duration-300 group"
+              className="px-8 py-4 border-2 font-semibold rounded-xl transition-all duration-300 group"
+              style={{
+                borderColor: colors.light.gray,
+                color: colors.dark.gray700
+              }}
               whileHover={!isMobile ? { 
                 scale: 1.05,
-                borderColor: "#ea580c",
-                color: "#c2410c",
-                backgroundColor: "#fff7ed"
+                borderColor: colors.primary.orange,
+                color: '#c2410c',
+                backgroundColor: '#fff7ed'
               } : {
-                borderColor: "#ea580c",
-                color: "#c2410c",
-                backgroundColor: "#fff7ed"
+                borderColor: colors.primary.orange,
+                color: '#c2410c',
+                backgroundColor: '#fff7ed'
               }}
               whileTap={{ scale: 0.95 }}
             >
