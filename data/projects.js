@@ -59,16 +59,16 @@ export const projects = [
   //   demoUrl: "/projects/smart-geofencing-attendance/request-demo",
   //       sections: ["details", "features", "gallery"],
   // },
-  {
-    slug: "ai-smart-police-station",
-    name: "AI-Smart Police Station",
-    client: "Police Dept",
-    image: "/projects/ai-smart-police-station/details.png",
-    excerpt:
-      "A digitized police workflow platform to improve efficiency, accountability, and citizen service using AI and automation.",
-    demoUrl: "/projects/ai-smart-police-station/request-demo",
-        sections: ["details", "features", "gallery"],
-  },
+  // {
+  //   slug: "ai-smart-police-station",
+  //   name: "AI-Smart Police Station",
+  //   client: "Police Dept",
+  //   image: "/projects/ai-smart-police-station/details.png",
+  //   excerpt:
+  //     "A digitized police workflow platform to improve efficiency, accountability, and citizen service using AI and automation.",
+  //   demoUrl: "/projects/ai-smart-police-station/request-demo",
+  //       sections: ["details", "features", "gallery"],
+  // },
   // {
   //   slug: "muddemal-smart-tracking",
   //   name: "Muddemal Smart Tracking System",
