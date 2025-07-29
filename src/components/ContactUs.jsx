@@ -384,121 +384,116 @@ const QuickContactForm = ({ isInView }) => {
   };
 
   return (
-    <Card3D>
+<Card3D>
+  <motion.div
+    className="relative p-6 sm:p-8 bg-white/90 backdrop-blur-sm rounded-2xl border border-gray-200/60 shadow-xl"
+    initial={{ opacity: 0, x: 50 }}
+    animate={isInView ? { opacity: 1, x: 0 } : {}}
+    transition={{ duration: 0.8, delay: 0.3 }}
+    whileHover={{
+      boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)",
+    }}
+  >
+    {/* Form header */}
+    <motion.div
+      className="text-center mb-6"
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: 0.6 }}
+    >
+      <h3 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Quick Contact</h3>
+      <p className="text-gray-600">Send us a message and we'll get back to you soon!</p>
+    </motion.div>
+    {/* Form */}
+    <form onSubmit={handleSubmit} className="space-y-4">
       <motion.div
-        className="relative p-6 sm:p-8 bg-white/90 backdrop-blur-sm rounded-2xl border border-gray-200/60 shadow-xl"
-        initial={{ opacity: 0, x: 50 }}
+        initial={{ opacity: 0, x: -20 }}
         animate={isInView ? { opacity: 1, x: 0 } : {}}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        whileHover={{
-          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)",
-        }}
+        transition={{ duration: 0.6, delay: 0.8 }}
       >
-        {/* Form header */}
-        <motion.div
-          className="text-center mb-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          <h3 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Quick Contact</h3>
-          <p className="text-gray-600">Send us a message and we'll get back to you soon!</p>
-        </motion.div>
-
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.8 }}
-          >
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 1 }}
-          >
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 1.2 }}
-          >
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Your Phone Number"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 1.4 }}
-          >
-            <textarea
-              name="message"
-              placeholder="Your Message"
-              value={formData.message}
-              onChange={handleChange}
-              required
-              rows="4"
-              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none"
-            />
-          </motion.div>
-
-          <motion.button
-            type="submit"
-            className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl shadow-lg group relative overflow-hidden"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 1.6 }}
-            whileHover={{ 
-              scale: 1.02,
-              boxShadow: "0 20px 40px -12px rgba(34, 197, 94, 0.4)"
-            }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            />
-            <span className="relative z-10 flex items-center justify-center">
-              <span className="mr-2">Send via WhatsApp</span>
-              <motion.span
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                💬
-              </motion.span>
-            </span>
-          </motion.button>
-        </form>
+        <input
+          type="text"
+          name="name"
+          placeholder="Your Name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+          className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800 placeholder-gray-500 transition-all duration-300"
+        />
       </motion.div>
-    </Card3D>
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={isInView ? { opacity: 1, x: 0 } : {}}
+        transition={{ duration: 0.6, delay: 1 }}
+      >
+        <input
+          type="email"
+          name="email"
+          placeholder="Your Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+          className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800 placeholder-gray-500 transition-all duration-300"
+        />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={isInView ? { opacity: 1, x: 0 } : {}}
+        transition={{ duration: 0.6, delay: 1.2 }}
+      >
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Your Phone Number"
+          value={formData.phone}
+          onChange={handleChange}
+          required
+          className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800 placeholder-gray-500 transition-all duration-300"
+        />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={isInView ? { opacity: 1, x: 0 } : {}}
+        transition={{ duration: 0.6, delay: 1.4 }}
+      >
+        <textarea
+          name="message"
+          placeholder="Your Message"
+          value={formData.message}
+          onChange={handleChange}
+          required
+          rows="4"
+          className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800 placeholder-gray-500 transition-all duration-300 resize-none"
+        />
+      </motion.div>
+      <motion.button
+        type="submit"
+        className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl shadow-lg group relative overflow-hidden"
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 1.6 }}
+        whileHover={{
+          scale: 1.02,
+          boxShadow: "0 20px 40px -12px rgba(34, 197, 94, 0.4)",
+        }}
+        whileTap={{ scale: 0.98 }}
+      >
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        />
+        <span className="relative z-10 flex items-center justify-center">
+          <span className="mr-2">Send via WhatsApp</span>
+          <motion.span
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            💬
+          </motion.span>
+        </span>
+      </motion.button>
+    </form>
+  </motion.div>
+</Card3D>
   );
 };
 
